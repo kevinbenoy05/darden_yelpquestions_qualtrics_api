@@ -1,35 +1,21 @@
 from flask import Flask, jsonify
-from json import loads
+from json import load
+import json
 app = Flask(__name__)
-reviews = '''
-[
-  {
-    "id": 1733158239000,
-    "review": "Straight to the point, it's cheap, it tastes and feels cheap. The good: price, location, dessert (edible food items are: baked chicken, fried chicken, mashed potatoes, salad bar lol, meat and cheese bar, ravioli, pizza) also our waitress was bomb af. The meh: behind counter meat slicing station, shrimp (not even deveined), Mexican station. The bad: breakfast - worst eggs ever, actually worst eggs. Le Benedict can't even cut through ham or English muffin (tried on all 3 occasions), steak, shrimp again, hell breaded items can't even, don't even. Decor it's the 1970 nightmare you can imagine. Tried 3 times and failed."
-  },
-  {
-    "id": 1733215689000,
-    "review": "Amazing family restaurant with great atmosphere! The staff was incredibly friendly and accommodating to our large group. Food came out hot and fresh, portions were generous. The kids menu had plenty of options and the play area kept them entertained. Parking was easy and the location is convenient. We'll definitely be back for special occasions. Highly recommend the pasta dishes and their signature dessert!"
-  },
-  {
-    "id": 1733273139000,
-    "review": "Decent food but the service was lacking. Had to wait 20 minutes just to be seated despite having a reservation. The server seemed overwhelmed and forgot our drink orders twice. The chicken was overcooked and the vegetables were barely warm. Price point is reasonable but the experience didn't match expectations. The restaurant was clean and the decor was nice, but that doesn't make up for poor execution."
-  },
-  {
-    "id": 1733330589000,
-    "review": "Hidden gem! This small family-owned place serves authentic cuisine with fresh ingredients. The owner came out to chat with us about the menu and made excellent recommendations. Everything we ordered was flavorful and clearly made from scratch. It's a bit cramped inside but the food more than makes up for it. Cash only, which is a bit inconvenient, but worth it. Will definitely return to try more dishes."
-  },
-  {
-    "id": 1733388039000,
-    "review": "Disappointing experience overall. Made a reservation for 7pm but wasn't seated until 7:45. The appetizer took another 30 minutes to arrive. When the main courses finally came, my steak was cold and had to be sent back. The manager did comp our appetizers, but by then our evening was already ruined. The restaurant has potential with its nice location and decor, but they need to work on their kitchen timing and service coordination."
-  }
-]
-'''
+
+def load_questions():
+    """Place holder method to lead questions into json string. 
+       TODO: Must take care of dynamically loading random questions from yelp file on to reviews json object
+    """
+    reviews = "[]"
+    with open("placeholder_questions.json") as json_file: #Place holder
+        reviews = load(json_file)
+    return reviews
 
 @app.route('/questions', methods = ['GET'])
-def get_questions():
-    random_reviews = loads(reviews) # placeholder
-    return jsonify(random_reviews)
+def get_questions_api():
+    reviews = load_questions()
+    return jsonify(reviews)
 
 if __name__ == '__main__':
     app.run(debug=True)
