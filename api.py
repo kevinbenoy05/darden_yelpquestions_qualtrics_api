@@ -8,7 +8,7 @@ def load_questions():
        TODO: Must take care of dynamically loading random questions from yelp file on to reviews json object
     """
     reviews = "[]"
-    with open("placeholder_questions.json") as json_file: #Place holder
+    with open("placeholder_questions.json", encoding='utf-8') as json_file: #Place holder
         reviews = load(json_file)
     return reviews
 
@@ -16,6 +16,10 @@ def load_questions():
 def get_questions_api():
     reviews = load_questions()
     return jsonify(reviews)
+
+@app.route('/health')
+def health_check():
+    return "OK", 200
 
 if __name__ == '__main__':
     app.run(debug=False, port=10000)
