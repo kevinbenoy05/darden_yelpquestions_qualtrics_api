@@ -1,15 +1,15 @@
 from flask import Flask, jsonify
 from json import load
-import json
+import random
 app = Flask(__name__)
 
 def load_questions():
-    """Place holder method to lead questions into json string. 
-       TODO: Must take care of dynamically loading random questions from yelp file on to reviews json object
-    """
-    reviews = "[]"
-    with open("placeholder_questions.json", encoding='utf-8') as json_file: #Place holder
-        reviews = load(json_file)
+    reviews = []
+    with open("random_reviews.json", encoding='utf-8') as json_file:
+        reviews_list = load(json_file)
+    random_indexes = random.sample(range(len(reviews_list)), 5)
+    for i in random_indexes:
+        reviews.append(reviews_list[i])
     return reviews
 
 @app.route('/questions', methods = ['GET'])
