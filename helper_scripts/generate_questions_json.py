@@ -17,10 +17,10 @@ def get_random_reviews_from_file(file: str, reviews: int) -> list:
     print("Done!")
     return random_reviews
 
-def create_json_file():
+def create_json_file(num_reviews: int):
     final_json = []
     for i in range(23):
-        json_one_file = get_random_reviews_from_file(f"res_revs_{i+1}.json", 1500//23)
+        json_one_file = get_random_reviews_from_file(f"res_revs_{i+1}.json", num_reviews//23)
         for review in json_one_file:
             final_json.append(review)
     print("creating final json file...")
@@ -30,4 +30,4 @@ def create_json_file():
 
 
 if __name__ == "__main__":
-    create_json_file()
+    create_json_file(1500)
