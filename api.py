@@ -26,7 +26,9 @@ def load_questions():
     selected_ids = []
     eligible_ids = review_counts_df.loc[review_counts_df['review_count'] < 5, 'review_id']
     if len(eligible_ids) < 5:
-        selected_ids = reviews_df['review_id'].sample(n=5, replace=False).tolist()
+        remaining_needed = 5 - len(eligible_ids)
+        ineligible_ids = review_counts_df.loc[review_counts_df['review_count'] >= 5, 'review_id']
+        selected_ids = eligible_ids.tolist() + ineligible_ids.sample(n=remaining_needed, replace=False).tolist()
     else:
         selected_ids = eligible_ids.sample(n=5, replace=False).tolist()
     review_counts_df.loc[review_counts_df['review_id'].isin(selected_ids), 'review_count'] += 1
