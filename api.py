@@ -54,5 +54,4 @@ def health_check():
 
 
 if __name__ == "__main__":
-     print(review_counts_df.head())
-    # app.run()
+    app.run()
