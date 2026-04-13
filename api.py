@@ -2,11 +2,12 @@ from flask import Flask, jsonify
 from json import load
 import pandas as pd
 import random
+import matplotlib.pyplot as plt
 
 
 app = Flask(__name__)
 
-control = "The restaurant is right next to the central train station, so it was very easy to find. There was plenty of parking in the lot across the street. We hadn't made a reservation, but we were seated within two minutes of arriving. Our server greeted us immediately and checked in regularly throughout the meal. The dining area was spotless — clean tables, clean floors, clean restrooms. The food was fresh and well-prepared. The menu had a solid variety of options to choose from. Prices were fair for what we received."
+control = "The restaurant is right next to the central train station, so it was very easy to find. There was plenty of parking in the lot across the street. Our server greeted us immediately and checked in regularly throughout the meal. The dining area was spotless — clean tables, clean floors, clean restrooms. The food was fresh and well-prepared. The menu had a solid variety of options to choose from. Prices were fair for what we received."
 with open("random_reviews.json", encoding='utf-8') as json_file:
     reviews_list = load(json_file)
 
