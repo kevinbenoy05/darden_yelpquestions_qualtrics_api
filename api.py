@@ -61,5 +61,4 @@ def health_check():
 
 
 if __name__ == "__main__":
-    print(len(reviews_df))
-    # app.run()
+    app.run()
