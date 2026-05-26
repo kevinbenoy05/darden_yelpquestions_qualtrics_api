@@ -1,5 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from json import load
+from typing import Any
 import pandas as pd
 import random
 import matplotlib.pyplot as plt
@@ -19,7 +20,7 @@ reviews_df = reviews_df[
     (reviews_df['review_text'].str.len() < 1000)
 ]
 review_counts_df = reviews_df[['review_id']].drop_duplicates().copy()
-review_counts_df['review_count'] = 2
+review_counts_df['review_count'] = 2 ## start at 0 then right???
 review_counts_df.loc[
     review_counts_df['review_id'] == '777jGHeZgwWgtJNBVGuxDw',
     'review_count'
@@ -47,18 +48,33 @@ def load_questions():
         'review_id': 'control',
         'review_text': control
     }
-    reviews.insert(random.randint(0, len(reviews)), control_review)
+    reviews.insert(0, control_review) # type: ignore
     return reviews
 
 @app.route('/questions', methods = ['GET'])
 def get_questions_api():
     reviews = load_questions()
+    print(f"[get_questions_api] Selected review IDs: {[r['review_id'] for r in reviews]}")
     return jsonify(reviews)
 
 @app.route('/health')
 def health_check():
     return "OK", 200
 
+@app.route('/reset_counts', methods=['POST'])
+def reset_counts():
+    data = request.get_json()
+    review_ids = data.get('review_ids', [])
+    def print_counts():
+        affected = review_counts_df[review_counts_df['review_id'].isin(review_ids)][['review_id', 'review_count']]
+        for _, row in affected.iterrows():
+            print(f"{row['review_id']}:{row['review_count']}")
+    print(f"[reset_counts] Before reset:")
+    print_counts()
+    review_counts_df.loc[review_counts_df['review_id'].isin(review_ids), 'review_count'] -= 1
+    print(f"[reset_counts] After reset:")
+    print_counts()
+    return jsonify({"status": "ok", "decremented": review_ids}), 200
 
 if __name__ == "__main__":
     app.run()
