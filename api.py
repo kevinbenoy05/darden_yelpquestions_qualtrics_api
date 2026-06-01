@@ -20,11 +20,11 @@ reviews_df = reviews_df[
     (reviews_df['review_text'].str.len() < 1000)
 ]
 review_counts_df = reviews_df[['review_id']].drop_duplicates().copy()
-review_counts_df['review_count'] = 2 ## start at 0 then right???
-review_counts_df.loc[
-    review_counts_df['review_id'] == '777jGHeZgwWgtJNBVGuxDw',
-    'review_count'
-] = 3  # Only one with 3 reviews
+review_counts_df['review_count'] = 0 ## start at 0 then right???
+# review_counts_df.loc[
+#     review_counts_df['review_id'] == '777jGHeZgwWgtJNBVGuxDw',
+#     'review_count'
+# ] = 3  # Only one with 3 reviews
 
         
 
